@@ -7,6 +7,7 @@ import Browser
 import Browser.Navigation as Navigation
 import Commands
 import Url
+import RemoteData
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -30,11 +31,24 @@ update msg model =
 
         OnFetchPlayers response ->
             ( { model | players = response }, Cmd.none )
-    
+
         UrlChanged url ->
-                ( { model | route = Routing.parseUrl url }
-                , Cmd.none
-                )
+            let
+                newRoute = Routing.parseUrl url
+                cmd =
+                    case newRoute of
+                        Models.PlayerRoute recordId ->
+                            if model.playerDetail == RemoteData.NotAsked then
+                                Commands.fetchPlayer recordId
+                            else
+                                Cmd.none
+
+                        _ ->
+                            Cmd.none
+            in
+            ( { model | route = newRoute }
+            , cmd
+            )
 
         LinkClicked urlRequest ->
             case urlRequest of

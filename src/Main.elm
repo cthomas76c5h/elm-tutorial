@@ -15,8 +15,24 @@ import Commands
 
 init : flags -> Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url key =
-    ( { players = RemoteData.NotAsked, route = Routing.parseUrl url, key = key, playerDetail = RemoteData.NotAsked }
-    , Commands.fetchPlayers
+    let
+        route =
+            Routing.parseUrl url
+
+        fetchPlayerCmd =
+            case route of
+                Models.PlayerRoute recordId ->
+                    Commands.fetchPlayer recordId
+
+                _ ->
+                    Cmd.none
+    in
+    ( { players = RemoteData.NotAsked
+      , route = route
+      , key = key
+      , playerDetail = RemoteData.NotAsked
+      }
+    , Cmd.batch [ Commands.fetchPlayers, fetchPlayerCmd ]
     )
 
 
