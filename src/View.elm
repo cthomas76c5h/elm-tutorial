@@ -4,7 +4,6 @@ import Html exposing (Html, div, text)
 import RemoteData exposing (WebData)
 import Messages exposing (Msg)
 import Models exposing (Model, Player)
-import Utils exposing (find)
 import Players.List as PL
 import Players.Edit as PE
 
@@ -38,7 +37,7 @@ viewPlayerList model =
 
 
 viewPlayerEdit : Model -> String -> Html Msg
-viewPlayerEdit model recordId =
+viewPlayerEdit model _ =
     case model.playerDetail of
         RemoteData.NotAsked ->
             text "No players loaded yet."

@@ -55,19 +55,13 @@ view model =
     }
 
 
-
-subscriptions : Model -> Sub Msg
-subscriptions model =
-    Sub.none
-
-
 main : Program () Model Msg
 main =
     Browser.application
         { init = init
         , view = view
         , update = update
-        , subscriptions = subscriptions
+        , subscriptions = (\_ -> Sub.none)
         , onUrlChange = UrlChanged
         , onUrlRequest = LinkClicked
         }

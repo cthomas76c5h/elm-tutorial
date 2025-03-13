@@ -15,7 +15,7 @@ view model =
 
 
 nav : Player -> Html Msg
-nav model =
+nav _ =
     div [ class "clearfix mb2 white bg-black p1" ]
         []
 
@@ -43,12 +43,12 @@ formLevel player =
 
 
 btnLevelDecrease : Player -> Html Msg
-btnLevelDecrease player =
+btnLevelDecrease _ =
     a [ class "btn ml1 h1" ]
         [ i [ class "fa fa-minus-circle" ] [] ]
 
 
 btnLevelIncrease : Player -> Html Msg
-btnLevelIncrease player =
+btnLevelIncrease _ =
     a [ class "btn ml1 h1" ]
         [ i [ class "fa fa-plus-circle" ] [] ]
