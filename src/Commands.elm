@@ -20,8 +20,8 @@ fetchPlayersUrl =
 
 
 fetchPlayer : String -> Cmd Msg
-fetchPlayer playerId =
+fetchPlayer recordId =
     Http.get
-        { url = fetchPlayersUrl ++ "/" ++ playerId
+        { url = fetchPlayersUrl ++ "/" ++ recordId
         , expect = Http.expectJson (OnFetchPlayer << RemoteData.fromResult) playerDecoder
         }

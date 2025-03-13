@@ -38,26 +38,16 @@ viewPlayerList model =
 
 
 viewPlayerEdit : Model -> String -> Html Msg
-viewPlayerEdit model playerId =
-    case String.toInt playerId of
-        Nothing ->
-            text "Invalid player id."
+viewPlayerEdit model recordId =
+    case model.playerDetail of
+        RemoteData.NotAsked ->
+            text "No players loaded yet."
 
-        Just pid ->
-            case model.players of
-                RemoteData.NotAsked ->
-                    text "No players loaded yet."
+        RemoteData.Loading ->
+            text "Loading players..."
 
-                RemoteData.Loading ->
-                    text "Loading players..."
+        RemoteData.Failure error ->
+            text ("Error: " ++ (error |> Debug.toString))
 
-                RemoteData.Failure error ->
-                    text ("Error: " ++ (error |> Debug.toString))
-
-                RemoteData.Success players ->
-                    case find (\p -> p.playerId == pid) players of
-                    Nothing ->
-                        text "Player not found."
-
-                    Just player ->
-                        PE.view player
+        RemoteData.Success player ->
+            PE.view player

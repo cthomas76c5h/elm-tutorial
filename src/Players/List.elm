@@ -2,7 +2,8 @@ module Players.List exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class)
-import Messages exposing (Msg)
+import Html.Events exposing (onClick)
+import Messages exposing (Msg(..))
 import Models exposing (Player)
 
 
@@ -44,10 +45,9 @@ list players =
 
 playerRow : Player -> Html Msg
 playerRow player =
-    tr []
+    tr [ onClick (PlayerSelected player.id) ]
         [ td [] [ text (String.fromInt player.playerId) ]
         , td [] [ text player.name ]
         , td [] [ text (String.fromInt player.level) ]
-        , td []
-            []
+        , td [] []
         ]

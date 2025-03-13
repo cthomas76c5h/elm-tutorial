@@ -28,8 +28,8 @@ view model =
                 Models.PlayersRoute ->
                     viewPlayerList model
 
-                Models.PlayerRoute playerId ->
-                    viewPlayerEdit model playerId
+                Models.PlayerRoute recordId ->
+                    viewPlayerEdit model recordId
 
                 Models.NotFoundRoute ->
                     Html.text "Page not found"

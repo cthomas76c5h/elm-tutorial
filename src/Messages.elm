@@ -12,3 +12,4 @@ type Msg
     | LinkClicked Browser.UrlRequest
     | OnFetchPlayers (WebData (List Player))
     | OnFetchPlayer (WebData Player)
+    | PlayerSelected String
