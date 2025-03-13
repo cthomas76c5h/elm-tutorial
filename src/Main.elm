@@ -2,7 +2,7 @@ module Main exposing (main)
 
 import Browser
 import Browser.Navigation as Navigation
-import Html exposing (Html)
+import Html exposing (text)
 import Models exposing (Model)
 import Messages exposing (Msg(..))
 import Routing
@@ -48,7 +48,7 @@ view model =
                     viewPlayerEdit model recordId
 
                 Models.NotFoundRoute ->
-                    Html.text "Page not found"
+                    text "Page not found"
     in
     { title = "My App"
     , body = [ pageContent ]
