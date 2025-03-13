@@ -50,6 +50,7 @@ savePlayerCmd player =
 playerEncoder : Player -> Encode.Value
 playerEncoder player =
     Encode.object
-        [ ( "name", Encode.string player.name )
+        [ ( "id", Encode.string player.id )
+        , ( "name", Encode.string player.name )
         , ( "level", Encode.int player.level )
         ]
