@@ -1,32 +1,13 @@
 module Update exposing (..)
 
 import Messages exposing (Msg(..))
-import Models exposing (Model, Player)
+import Models exposing (Model)
 import Routing
 import Browser
 import Browser.Navigation as Navigation
 import Commands
 import Url
 import RemoteData
-
-
-updatePlayer : Model -> Player -> Model
-updatePlayer model updatedPlayer =
-    let
-        pick currentPlayer =
-            if updatedPlayer.id == currentPlayer.id then
-                updatedPlayer
-            else
-                currentPlayer
-
-        updatePlayerList players =
-            List.map pick players
-
-        updatedPlayers =
-            RemoteData.map updatePlayerList model.players
-    in
-        { model | players = updatedPlayers }
-
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
@@ -83,8 +64,27 @@ update msg model =
             in
                 ( model, Commands.savePlayerCmd updatedPlayer )
 
-        Messages.OnPlayerSave (Ok player) ->
-            ( updatePlayer model player, Cmd.none )
+        Messages.OnPlayerSave result ->
+            case result of
+                Ok updatedPlayer ->
+                    let
+                        newPlayerDetail =
+                            RemoteData.Success updatedPlayer
 
-        Messages.OnPlayerSave (Err _) ->
-            ( model, Cmd.none )
+                        newPlayers =
+                            case model.players of
+                                RemoteData.Success players ->
+                                    RemoteData.Success
+                                        (List.map (\p -> if p.id == updatedPlayer.id then updatedPlayer else p) players)
+
+                                _ ->
+                                    model.players
+                    in
+                    ( { model | playerDetail = newPlayerDetail, players = newPlayers }
+                    , Cmd.none
+                    )
+
+                Err error ->
+                    ( { model | playerDetail = RemoteData.Failure error }
+                    , Cmd.none
+                    )
