@@ -34,8 +34,8 @@ parseUrl url =
         [ "players" ] ->
             PlayersRoute
 
-        [ "players", playerId ] ->
-            PlayerRoute playerId
+        [ "players", recordId ] ->
+            PlayerRoute recordId
 
         _ ->
             NotFoundRoute
