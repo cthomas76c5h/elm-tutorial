@@ -4,7 +4,7 @@ import Models exposing (Player)
 import RemoteData exposing (WebData)
 import Browser
 import Url exposing (Url)
-
+import Http
 
 
 type Msg
@@ -13,3 +13,5 @@ type Msg
     | OnFetchPlayers (WebData (List Player))
     | OnFetchPlayer (WebData Player)
     | PlayerSelected String
+    | ChangeLevel Player Int
+    | OnPlayerSave (Result Http.Error Player)

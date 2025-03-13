@@ -2,6 +2,7 @@ module Players.Edit exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (class)
+import Html.Events exposing (onClick)
 import Messages exposing (Msg)
 import Models exposing (Player)
 
@@ -43,12 +44,14 @@ formLevel player =
 
 
 btnLevelDecrease : Player -> Html Msg
-btnLevelDecrease _ =
-    a [ class "btn ml1 h1" ]
-        [ i [ class "fa fa-minus-circle" ] [] ]
+btnLevelDecrease player =
+    button [ class "btn ml1 h1"
+           , onClick (Messages.ChangeLevel player -1) ]
+        [ text "-" ]
 
 
 btnLevelIncrease : Player -> Html Msg
-btnLevelIncrease _ =
-    a [ class "btn ml1 h1" ]
-        [ i [ class "fa fa-plus-circle" ] [] ]
+btnLevelIncrease player =
+    button [ class "btn ml1 h1"
+           , onClick (Messages.ChangeLevel player 1) ]
+        [ text "+" ]

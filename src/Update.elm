@@ -1,13 +1,31 @@
 module Update exposing (..)
 
 import Messages exposing (Msg(..))
-import Models exposing (Model)
+import Models exposing (Model, Player)
 import Routing
 import Browser
 import Browser.Navigation as Navigation
 import Commands
 import Url
 import RemoteData
+
+
+updatePlayer : Model -> Player -> Model
+updatePlayer model updatedPlayer =
+    let
+        pick currentPlayer =
+            if updatedPlayer.id == currentPlayer.id then
+                updatedPlayer
+            else
+                currentPlayer
+
+        updatePlayerList players =
+            List.map pick players
+
+        updatedPlayers =
+            RemoteData.map updatePlayerList model.players
+    in
+        { model | players = updatedPlayers }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -57,3 +75,16 @@ update msg model =
 
                 Browser.External href ->
                     ( model, Navigation.load href )
+
+        Messages.ChangeLevel player howMuch ->
+            let
+                updatedPlayer =
+                    { player | level = player.level + howMuch }
+            in
+                ( model, Commands.savePlayerCmd updatedPlayer )
+
+        Messages.OnPlayerSave (Ok player) ->
+            ( updatePlayer model player, Cmd.none )
+
+        Messages.OnPlayerSave (Err _) ->
+            ( model, Cmd.none )
