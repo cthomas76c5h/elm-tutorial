@@ -11,3 +11,4 @@ type Msg
     = UrlChanged Url
     | LinkClicked Browser.UrlRequest
     | OnFetchPlayers (WebData (List Player))
+    | OnFetchPlayer (WebData Player)

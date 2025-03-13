@@ -12,6 +12,7 @@ type alias Model =
     { key : Key
     , route : Route
     , players : WebData (List Player)
+    , playerDetail : WebData Player
     }
 
 initialModel : Key -> Model
@@ -19,6 +20,7 @@ initialModel key =
     { key = key
     , route = NotFoundRoute
     , players = RemoteData.NotAsked
+    , playerDetail = RemoteData.NotAsked
     }
 
 

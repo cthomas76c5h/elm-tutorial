@@ -11,7 +11,12 @@ import Url
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Messages.OnFetchPlayers response ->
+        OnFetchPlayer response ->
+            ( { model | playerDetail = response }
+            , Cmd.none
+            )
+
+        OnFetchPlayers response ->
             ( { model | players = response }, Cmd.none )
     
         UrlChanged url ->

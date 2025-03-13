@@ -15,7 +15,7 @@ import Commands
 
 init : flags -> Url -> Navigation.Key -> ( Model, Cmd Msg )
 init _ url key =
-    ( { players = RemoteData.Loading, route = Routing.parseUrl url, key = key }
+    ( { players = RemoteData.NotAsked, route = Routing.parseUrl url, key = key, playerDetail = RemoteData.NotAsked }
     , Commands.fetchPlayers
     )
 
